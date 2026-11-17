@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Link - Kumpulan Link Penting dan Bermanfaat</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons via CDN (untuk UI Admin) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Animasi halus untuk kartu link */
+        .link-card {
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .link-card:hover {
+            transform: translateY(-2px);
+        }
+        .link-card:active {
+            transform: translateY(0) scale(0.995);
+        }
+        /* Pola grid halus di latar belakang header */
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.45);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- ===================================================================== -->
+    <!-- KONFIGURASI DEFAULT (OTOMATIS DIPERBARUI SAAT EXPORT/COPY HTML)        -->
+    <!-- ===================================================================== -->
+    <script id="site-config-script">
+        const DEFAULT_CONFIG = {
+            adminPassword: "admin123",
+            profile: {
+                title: "Portal Link",
+                subtitle: "Kumpulan Link Penting dan Bermanfaat",
+                badgeText: "Akses Cepat & Terpadu",
+                avatarUrl: "", // Kosongkan untuk menampilkan monogram modern otomatis, atau isi URL gambar
+                footerText: "© 2026 Portal Link. Disusun untuk kemudahan akses informasi."
+            },
+            appearance: {
+                theme: "subtle-mesh", // clean-light, subtle-mesh, soft-slate, warm-cream, dark-modern
+                buttonStyle: "modern-glass" // modern-glass, soft-pill, clean-outline, bold-offset
+            },
+            links: [
+                {
+                    id: "link-1",
+                    title: "Formulir Pendaftaran & Layanan Utama",
+                    subtitle: "Akses cepat pengisian data dan registrasi online",
+                    url: "https://example.com/formulir",
+                    icon: "form",
+                    color: "#4f46e5",
+                    active: true
+                },
+                {
+                    id: "link-2",
+                    title: "Jadwal Agenda & Kalender Kegiatan",
+                    subtitle: "Informasi jadwal terkini dan agenda penting",
+                    url: "https://example.com/jadwal",
+                    icon: "calendar",
+                    color: "#0ea5e9",
+                    active: true
+                },
+                {
+                    id: "link-3",
+                    title: "Pusat Dokumen, Panduan & Modul",
+                    subtitle: "Kumpulan referensi materi siap baca dan unduh",
+                    url: "https://example.com/dokumen",
+                    icon: "book",
+                    color: "#10b981",
+                    active: true
+                },
+                {
+                    id: "link-4",
+                    title: "Arsip Folder & Berkas Digital",
+                    subtitle: "Direktori penyimpanan dokumen terstruktur",
+                    url: "https://example.com/arsip",
+                    icon: "folder",
+                    color: "#f59e0b",
+                    active: true
+                },
+                {
+                    id: "link-5",
+                    title: "Layanan Bantuan & Konsultasi",
+                    subtitle: "Hubungi tim admin untuk pertanyaan lebih lanjut",
+                    url: "https://wa.me/6281234567890",
+                    icon: "chat",
+                    color: "#8b5cf6",
+                    active: true
+                }
+            ]
+        };
+    </script>
+
+    <!-- ===================================================================== -->
+    <!-- TOAST NOTIFICATION (PENGGANTI ALERT)                                  -->
+    <!-- ===================================================================== -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- ===================================================================== -->
+    <!-- BAR INDIKATOR SESI ADMIN AKTIF (HANYA MUNCUL SAAT SUDAH LOGIN)        -->
+    <!-- ===================================================================== -->
+    <div id="admin-session-bar" class="hidden sticky top-0 z-30 w-full bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 px-4 py-2.5 shadow-md">
+        <div class="max-w-xl mx-auto flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="font-medium text-slate-200">Mode Pratinjau (Sesi Admin Aktif)</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="enterAdminMode()" 
+                        class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition cursor-pointer">
+                    Dashboard Admin
+                </button>
+                <button onclick="logoutAdmin()" 
+                        class="px-2.5 py-1 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/30 font-medium transition cursor-pointer">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 1: TAMPILAN PUBLIK (MICROSITE)                                   -->
+    <!-- ===================================================================== -->
+    <main id="public-view" class="w-full max-w-xl mx-auto px-4 pt-8 sm:pt-12 pb-16 flex-1 flex flex-col items-center">
+        
+        <!-- HEADER MODERN & MINIMALIS -->
+        <header id="pub-header-card" class="w-full mb-7 rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden border transition-all duration-300">
+            <!-- Dekorasi Cahaya Halus di Sudut Header -->
+            <div class="absolute -top-16 -right-16 w-44 h-44 rounded-full bg-indigo-500/10 blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-16 -left-16 w-44 h-44 rounded-full bg-sky-500/10 blur-2xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col items-center">
+                <!-- Badge Status Kecil -->
+                <div id="pub-badge-wrap" class="mb-4">
+                    <span id="pub-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase bg-indigo-500/10 text-indigo-600 border border-indigo-500/20">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                        <span id="pub-badge-text">Akses Cepat & Terpadu</span>
+                    </span>
+                </div>
+
+                <!-- Avatar / Logo dengan Bingkai Squircle Modern -->
+                <div class="mb-4 relative group">
+                    <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl p-1 bg-gradient-to-tr from-indigo-500/30 via-sky-400/30 to-emerald-400/30 shadow-md transition-transform duration-300 group-hover:scale-105">
+                        <img id="pub-avatar-img" src="" alt="Logo Portal" class="hidden w-full h-full rounded-[14px] object-cover bg-white">
+                        <div id="pub-avatar-monogram" class="w-full h-full rounded-[14px] bg-gradient-to-br from-slate-800 to-slate-950 text-white flex items-center justify-center shadow-inner">
+                            <!-- Ikon/Inisial Monogram Modern -->
+                            <svg class="w-9 h-9 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Judul & Subjudul -->
+                <h1 id="pub-title" class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">
+                    Portal Link
+                </h1>
+                <p id="pub-subtitle" class="text-sm sm:text-[15px] opacity-75 max-w-md leading-relaxed">
+                    Kumpulan Link Penting dan Bermanfaat
+                </p>
+
+                <!-- Pencarian Cepat (Muncul otomatis jika link >= 5) -->
+                <div id="pub-search-wrapper" class="w-full max-w-sm mt-5 relative">
+                    <div class="relative flex items-center">
+                        <svg class="w-4 h-4 absolute left-3.5 opacity-45 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                        </svg>
+                        <input type="text" id="pub-search-input" oninput="filterPublicLinks()" placeholder="Cari tautan..."
+                               class="w-full pl-10 pr-4 py-2 text-xs sm:text-sm rounded-xl border bg-black/[0.03] dark:bg-white/[0.05] border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 transition">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- DAFTAR TOMBOL LINK -->
+        <section id="pub-links-container" class="w-full flex flex-col gap-3">
+            <!-- Diisi JS secara dinamis -->
+        </section>
+
+        <!-- Empty state -->
+        <div id="pub-empty-state" class="hidden text-center py-12 opacity-65">
+            <p class="text-sm font-medium">Tidak ada tautan yang ditemukan.</p>
+        </div>
+    </main>
+
+    <!-- FOOTER PUBLIK & TOMBOL ADMIN -->
+    <footer id="public-footer" class="w-full py-6 px-4 text-center text-xs opacity-75">
+        <p id="pub-footer-text" class="mb-3"></p>
+        <button onclick="openAdminGate()" 
+                class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/[0.05] hover:bg-black/[0.09] dark:bg-white/[0.08] dark:hover:bg-white/[0.14] transition text-xs font-medium cursor-pointer">
+            <svg class="w-3.5 h-3.5 opacity-75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span>Mode Admin</span>
+        </button>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL LOGIN ADMIN (TANPA HINT PASSWORD)                               -->
+    <!-- ===================================================================== -->
+    <div id="login-modal" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+        <div class="bg-white text-slate-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 border border-slate-100">
+            <div class="flex justify-between items-center mb-3">
+                <div class="flex items-center gap-2 text-indigo-600 font-bold text-lg font-heading">
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                    <span>Login Administrator</span>
+                </div>
+                <button onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                Halaman ini khusus pengelola portal. Masukkan kredensial password untuk membuka dashboard pengaturan.
+            </p>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div class="relative">
+                    <input type="password" id="admin-password-input" required placeholder="Masukkan password..." autocomplete="current-password"
+                           class="w-full pl-4 pr-11 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+                    <button type="button" onclick="togglePasswordVisibility()" title="Tampilkan / Sembunyikan Password"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer">
+                        <i id="login-eye-icon" data-lucide="eye" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div class="flex gap-2">
+                    <button type="button" onclick="closeLoginModal()" 
+                            class="flex-1 py-2.5 px-4 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-medium transition cursor-pointer">
+                        Batal
+                    </button>
+                    <button type="submit" 
+                            class="flex-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium shadow-md shadow-indigo-500/20 transition cursor-pointer">
+                        Masuk
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- VIEW 2: DASHBOARD ADMIN                                               -->
+    <!-- ===================================================================== -->
+    <div id="admin-view" class="hidden min-h-screen bg-slate-50 text-slate-800 flex-col">
+        <!-- Top Navbar Admin -->
+        <nav class="bg-white border-b border-slate-200 sticky top-0 z-30">
+            <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0">
+                        <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <h2 class="font-bold text-slate-800 text-sm sm:text-base leading-tight truncate">Dashboard Admin</h2>
+                        <p class="text-[11px] text-slate-500 truncate">Pengelola Portal Link & GitHub Pages</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button onclick="exitAdminMode()" 
+                            class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-medium transition cursor-pointer">
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Lihat Pratinjau</span>
+                        <span class="sm:hidden">Pratinjau</span>
+                    </button>
+                    <button onclick="logoutAdmin()" 
+                            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-medium transition shadow-sm shadow-red-500/20 cursor-pointer">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Konten Utama Admin -->
+        <div class="max-w-5xl mx-auto w-full px-4 py-6 flex-1">
+            <!-- Navigasi Tab -->
+            <div class="flex gap-2 overflow-x-auto pb-2 mb-6 border-b border-slate-200">
+                <button onclick="switchAdminTab('links')" id="tab-btn-links"
+                        class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition whitespace-nowrap bg-indigo-600 text-white shadow-sm cursor-pointer">
+                    <i data-lucide="link-2" class="w-4 h-4"></i>
+                    <span>Kelola Tautan</span>
+                </button>
+                <button onclick="switchAdminTab('appearance')" id="tab-btn-appearance"
+                        class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="palette" class="w-4 h-4"></i>
+                    <span>Tampilan & Header</span>
+                </button>
+                <button onclick="switchAdminTab('publish')" id="tab-btn-publish"
+                        class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 cursor-pointer">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>Keamanan & Publish</span>
+                </button>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- TAB 1: KELOLA LINK (CRUD & PEMILIH IKON VISUAL)               -->
+            <!-- ============================================================= -->
+            <div id="tab-content-links" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Kolom Kiri: Form Tambah / Edit Link -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm sticky top-24">
+                        <h3 id="form-link-title" class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="plus-circle" class="w-5 h-5 text-indigo-600"></i>
+                            <span>Tambah Link Baru</span>
+                        </h3>
+                        <form id="link-form" onsubmit="saveLink(event)" class="space-y-4">
+                            <input type="hidden" id="link-id">
+                            <input type="hidden" id="link-icon" value="globe">
+                            
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Judul Tombol *</label>
+                                <input type="text" id="link-title" required placeholder="Contoh: Formulir Pendaftaran"
+                                       class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Keterangan Singkat (Opsional)</label>
+                                <input type="text" id="link-subtitle" placeholder="Contoh: Isi formulir sebelum tanggal 20"
+                                       class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">URL Tujuan *</label>
+                                <input type="url" id="link-url" required placeholder="https://..."
+                                       class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+
+                            <!-- Pemilih Ikon SVG Visual -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1.5">Pilih Ikon Tombol</label>
+                                <div id="icon-picker-grid" class="grid grid-cols-6 gap-2 p-2.5 rounded-xl border border-slate-200 bg-slate-50/70">
+                                    <!-- Diisi JS dengan tombol-tombol ikon SVG -->
+                                </div>
+                            </div>
+
+                            <!-- Pemilih Warna Aksen -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1.5">Warna Aksen Ikon</label>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <button type="button" onclick="selectPresetColor('#4f46e5')" class="w-7 h-7 rounded-full bg-[#4f46e5] border-2 border-white shadow ring-1 ring-slate-300"></button>
+                                    <button type="button" onclick="selectPresetColor('#0ea5e9')" class="w-7 h-7 rounded-full bg-[#0ea5e9] border-2 border-white shadow ring-1 ring-slate-300"></button>
+                                    <button type="button" onclick="selectPresetColor('#10b981')" class="w-7 h-7 rounded-full bg-[#10b981] border-2 border-white shadow ring-1 ring-slate-300"></button>
+                                    <button type="button" onclick="selectPresetColor('#f59e0b')" class="w-7 h-7 rounded-full bg-[#f59e0b] border-2 border-white shadow ring-1 ring-slate-300"></button>
+                                    <button type="button" onclick="selectPresetColor('#ec4899')" class="w-7 h-7 rounded-full bg-[#ec4899] border-2 border-white shadow ring-1 ring-slate-300"></button>
+                                    <button type="button" onclick="selectPresetColor('#8b5cf6')" class="w-7 h-7 rounded-full bg-[#8b5cf6] border-2 border-white shadow ring-1 ring-slate-300"></button>
+                                    <div class="flex items-center gap-1.5 ml-auto">
+                                        <input type="color" id="link-color" value="#4f46e5" 
+                                               class="h-8 w-10 rounded-lg border border-slate-300 cursor-pointer p-0.5 bg-white">
+                                        <span id="link-color-hex" class="text-[11px] text-slate-500 font-mono">#4f46e5</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 flex gap-2">
+                                <button type="button" id="cancel-edit-btn" onclick="resetLinkForm()" class="hidden flex-1 py-2.5 px-4 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 text-sm font-medium transition">
+                                    Batal
+                                </button>
+                                <button type="submit" class="flex-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium shadow-sm transition flex items-center justify-center gap-1.5">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                    <span id="save-link-btn-text">Simpan Link</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Daftar Link -->
+                <div class="lg:col-span-7">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                                <i data-lucide="layers" class="w-5 h-5 text-indigo-600"></i>
+                                <span>Daftar Tautan (<span id="admin-link-count">0</span>)</span>
+                            </h3>
+                            <span class="text-xs text-slate-400">Atur urutan atau visibilitas</span>
+                        </div>
+
+                        <div id="admin-links-list" class="space-y-3">
+                            <!-- Diisi JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- TAB 2: PENGATURAN HEADER & TAMPILAN                           -->
+            <!-- ============================================================= -->
+            <div id="tab-content-appearance" class="hidden max-w-3xl mx-auto space-y-6">
+                <!-- Identitas Header -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="layout-template" class="w-5 h-5 text-indigo-600"></i>
+                        <span>Konten Header & Profil</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Judul Utama Portal</label>
+                                <input type="text" id="set-title" oninput="updateProfileSettings()"
+                                       class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Teks Badge Atas (Opsional)</label>
+                                <input type="text" id="set-badge" oninput="updateProfileSettings()" placeholder="Contoh: Akses Cepat & Terpadu"
+                                       class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Subjudul / Deskripsi Singkat</label>
+                            <input type="text" id="set-subtitle" oninput="updateProfileSettings()"
+                                   class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">URL Logo / Foto (Kosongkan untuk ikon monogram otomatis)</label>
+                            <input type="url" id="set-avatar" oninput="updateProfileSettings()" placeholder="https://... (opsional)"
+                                   class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Teks Footer</label>
+                            <input type="text" id="set-footer" oninput="updateProfileSettings()"
+                                   class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tema Latar & Gaya Tombol -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-indigo-600"></i>
+                        <span>Tema Warna & Gaya Kartu Link</span>
+                    </h3>
+                    
+                    <div class="mb-6">
+                        <label class="block text-xs font-semibold text-slate-600 mb-2">Tema Latar Belakang</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                            <button type="button" onclick="setTheme('subtle-mesh')" class="theme-option p-3 rounded-xl border text-left transition flex flex-col gap-2" data-theme="subtle-mesh">
+                                <div class="w-full h-8 rounded-lg bg-gradient-to-br from-indigo-50 via-white to-sky-100 border border-indigo-200"></div>
+                                <span class="text-xs font-medium">Subtle Mesh</span>
+                            </button>
+                            <button type="button" onclick="setTheme('clean-light')" class="theme-option p-3 rounded-xl border text-left transition flex flex-col gap-2" data-theme="clean-light">
+                                <div class="w-full h-8 rounded-lg bg-slate-50 border border-slate-300"></div>
+                                <span class="text-xs font-medium">Clean Light</span>
+                            </button>
+                            <button type="button" onclick="setTheme('soft-slate')" class="theme-option p-3 rounded-xl border text-left transition flex flex-col gap-2" data-theme="soft-slate">
+                                <div class="w-full h-8 rounded-lg bg-slate-200/80 border border-slate-300"></div>
+                                <span class="text-xs font-medium">Soft Slate</span>
+                            </button>
+                            <button type="button" onclick="setTheme('warm-cream')" class="theme-option p-3 rounded-xl border text-left transition flex flex-col gap-2" data-theme="warm-cream">
+                                <div class="w-full h-8 rounded-lg bg-[#faf7f2] border border-amber-200"></div>
+                                <span class="text-xs font-medium">Warm Cream</span>
+                            </button>
+                            <button type="button" onclick="setTheme('dark-modern')" class="theme-option p-3 rounded-xl border text-left transition flex flex-col gap-2" data-theme="dark-modern">
+                                <div class="w-full h-8 rounded-lg bg-slate-950 border border-slate-700"></div>
+                                <span class="text-xs font-medium">Dark Modern</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-2">Gaya Kartu Tombol</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <button type="button" onclick="setButtonStyle('modern-glass')" class="btn-style-option p-3 rounded-2xl border text-center text-xs font-medium transition cursor-pointer" data-style="modern-glass">
+                                Modern Card
+                            </button>
+                            <button type="button" onclick="setButtonStyle('soft-pill')" class="btn-style-option p-3 rounded-full border text-center text-xs font-medium transition cursor-pointer" data-style="soft-pill">
+                                Kapsul Halus
+                            </button>
+                            <button type="button" onclick="setButtonStyle('clean-outline')" class="btn-style-option p-3 rounded-2xl border-2 border-slate-400 text-center text-xs font-medium transition cursor-pointer" data-style="clean-outline">
+                                Minimal Outline
+                            </button>
+                            <button type="button" onclick="setButtonStyle('bold-offset')" class="btn-style-option p-3 rounded-2xl border-2 border-slate-800 shadow-[3px_3px_0px_#1e293b] text-center text-xs font-medium transition cursor-pointer" data-style="bold-offset">
+                                Offset Shadow
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================= -->
+            <!-- TAB 3: KEAMANAN & PUBLIKASI GITHUB PAGES                      -->
+            <!-- ============================================================= -->
+            <div id="tab-content-publish" class="hidden max-w-3xl mx-auto space-y-6">
+                <!-- Ubah Password Admin -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-1 flex items-center gap-2">
+                        <i data-lucide="key-round" class="w-5 h-5 text-indigo-600"></i>
+                        <span>Keamanan Password Admin</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-4">
+                        Ganti password default agar hanya kamu yang bisa mengakses dashboard. Setelah mengganti password, pastikan melakukan ekspor ulang file <code class="bg-slate-100 px-1 rounded">index.html</code> untuk GitHub Pages.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="set-new-password" placeholder="Masukkan password baru (minimal 4 karakter)..."
+                               class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button type="button" onclick="updateAdminPassword()" 
+                                class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium transition cursor-pointer">
+                            Simpan Password
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 border border-indigo-200 p-5 rounded-2xl text-indigo-950">
+                    <h3 class="font-bold flex items-center gap-2 text-base mb-2">
+                        <i data-lucide="rocket" class="w-5 h-5 text-indigo-600"></i>
+                        <span>Publikasikan Perubahan ke GitHub Pages</span>
+                    </h3>
+                    <p class="text-xs sm:text-sm leading-relaxed text-indigo-900/85 mb-3">
+                        Setiap perubahan otomatis tersimpan di browser ini. Untuk memperbarui halaman publik di GitHub Pages agar bisa dilihat semua orang:
+                    </p>
+                    <ol class="list-decimal list-inside text-xs sm:text-sm space-y-1.5 text-indigo-900 font-medium">
+                        <li>Klik tombol <strong>"Salin Kode HTML Siap Deploy"</strong> atau <strong>"Download File index.html"</strong> di bawah ini.</li>
+                        <li>Buka repository GitHub kamu, lalu timpa / edit file <code class="bg-indigo-100 px-1.5 py-0.5 rounded">index.html</code>.</li>
+                        <li>Klik <strong>Commit changes</strong> dan tunggu GitHub Pages selesai memperbarui situs.</li>
+                    </ol>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base">Ekspor File Siap Upload</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button onclick="copyFullHtmlForDeploy()" 
+                                class="p-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-left transition shadow-md shadow-indigo-500/20 flex items-start gap-3 cursor-pointer">
+                            <i data-lucide="copy-check" class="w-6 h-6 shrink-0 mt-0.5"></i>
+                            <div>
+                                <div class="font-bold text-sm">Salin Kode HTML Siap Deploy</div>
+                                <div class="text-xs text-indigo-100 mt-0.5">Salin kode lengkap beserta konfigurasi terbaru ke clipboard.</div>
+                            </div>
+                        </button>
+
+                        <button onclick="downloadHtmlFile()" 
+                                class="p-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-left transition shadow-md shadow-emerald-500/20 flex items-start gap-3 cursor-pointer">
+                            <i data-lucide="download" class="w-6 h-6 shrink-0 mt-0.5"></i>
+                            <div>
+                                <div class="font-bold text-sm">Download File index.html</div>
+                                <div class="text-xs text-emerald-100 mt-0.5">Unduh file index.html untuk langsung diunggah ke GitHub.</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-base">Cadangan Data (JSON) & Reset</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="exportJsonConfig()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-medium transition">
+                            <i data-lucide="file-json" class="w-4 h-4 text-amber-600"></i>
+                            <span>Export JSON</span>
+                        </button>
+
+                        <label class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-medium transition cursor-pointer">
+                            <i data-lucide="upload" class="w-4 h-4 text-indigo-600"></i>
+                            <span>Import JSON</span>
+                            <input type="file" accept=".json" onchange="importJsonConfig(event)" class="hidden">
+                        </label>
+
+                        <button onclick="confirmResetDefault()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 text-red-600 text-xs sm:text-sm font-medium transition ml-auto">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                            <span>Reset Default</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Reset -->
+    <div id="reset-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl">
+            <h4 class="font-bold text-slate-800 text-lg mb-2 font-heading">Reset Pengaturan?</h4>
+            <p class="text-xs sm:text-sm text-slate-600 mb-5">Semua perubahan di browser ini akan dikembalikan ke pengaturan awal template.</p>
+            <div class="flex gap-2">
+                <button onclick="closeResetModal()" class="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50">Batal</button>
+                <button onclick="executeResetDefault()" class="flex-1 py-2.5 rounded-xl bg-red-600 text-white text-sm font-medium hover:bg-red-700">Ya, Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- LOGIKA APLIKASI & KOLEKSI IKON SVG MODERN                             -->
+    <!-- ===================================================================== -->
+    <script>
+        const STORAGE_KEY = 'portal_link_config_v2';
+        let appConfig = {};
+
+        // Koleksi Ikon SVG Minimalis Modern (Presisi, bersih, stroke 1.8)
+        const MODERN_ICONS = {
+            globe: {
+                label: "Website / Tautan",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`
+            },
+            form: {
+                label: "Formulir / Registrasi",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6"/><path d="M9 16h6"/></svg>`
+            },
+            calendar: {
+                label: "Jadwal / Agenda",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/></svg>`
+            },
+            book: {
+                label: "Buku / Modul",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`
+            },
+            doc: {
+                label: "Dokumen / Berkas",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>`
+            },
+            folder: {
+                label: "Folder / Arsip",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>`
+            },
+            video: {
+                label: "Video / Meeting",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>`
+            },
+            download: {
+                label: "Unduh / Download",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>`
+            },
+            chat: {
+                label: "Pesan / Kontak",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>`
+            },
+            award: {
+                label: "Sertifikat / Penghargaan",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>`
+            },
+            star: {
+                label: "Unggulan / Favorit",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
+            },
+            pin: {
+                label: "Lokasi / Peta",
+                svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`
+            }
+        };
+
+        // Helper mengonversi warna hex ke rgba transparan untuk gaya duotone modern
+        function hexToRgba(hex, alpha) {
+            const cleanHex = (hex || '#4f46e5').replace('#', '');
+            const r = parseInt(cleanHex.substring(0, 2), 16) || 79;
+            const g = parseInt(cleanHex.substring(2, 4), 16) || 70;
+            const b = parseInt(cleanHex.substring(4, 6), 16) || 229;
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        // Inisialisasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            loadConfig();
+            renderIconPicker();
+            renderPublicView();
+            lucide.createIcons();
+
+            const colorInput = document.getElementById('link-color');
+            if (colorInput) {
+                colorInput.addEventListener('input', (e) => {
+                    document.getElementById('link-color-hex').textContent = e.target.value;
+                });
+            }
+        });
+
+        function loadConfig() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    appConfig = JSON.parse(saved);
+                } else {
+                    appConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+                }
+            } catch (e) {
+                appConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+            }
+        }
+
+        function saveConfig() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appConfig));
+            } catch (e) {
+                showToast("Gagal menyimpan perubahan ke browser.", "error");
+            }
+        }
+
+        // =====================================================================
+        // RENDER TAMPILAN PUBLIK (MICROSITE)
+        // =====================================================================
+        function updateSessionBarVisibility() {
+            const sessionBar = document.getElementById('admin-session-bar');
+            const isPublicVisible = !document.getElementById('public-view').classList.contains('hidden');
+            const isAuthenticated = sessionStorage.getItem('portal_admin_auth') === 'true';
+
+            if (sessionBar) {
+                if (isAuthenticated && isPublicVisible) {
+                    sessionBar.classList.remove('hidden');
+                } else {
+                    sessionBar.classList.add('hidden');
+                }
+            }
+        }
+
+        function renderPublicView() {
+            const body = document.body;
+            const headerCard = document.getElementById('pub-header-card');
+            const theme = appConfig.appearance.theme;
+            const btnStyle = appConfig.appearance.buttonStyle;
+
+            updateSessionBarVisibility();
+
+            body.className = "min-h-screen flex flex-col justify-between antialiased transition-colors duration-300";
+            headerCard.className = "w-full mb-7 rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden border transition-all duration-300";
+
+            let cardBaseClass = "";
+            let isDark = false;
+
+            switch (theme) {
+                case 'clean-light':
+                    body.classList.add('bg-slate-50', 'text-slate-800');
+                    headerCard.classList.add('bg-white', 'border-slate-200/80', 'shadow-sm');
+                    cardBaseClass = "bg-white text-slate-800 border border-slate-200/80 shadow-sm hover:shadow-md";
+                    break;
+                case 'soft-slate':
+                    body.classList.add('bg-slate-200/60', 'text-slate-800');
+                    headerCard.classList.add('bg-white/95', 'border-slate-300/70', 'shadow-sm');
+                    cardBaseClass = "bg-white/95 text-slate-800 border border-slate-300/70 shadow-sm hover:shadow-md";
+                    break;
+                case 'warm-cream':
+                    body.classList.add('bg-[#faf7f2]', 'text-stone-800');
+                    headerCard.classList.add('bg-white/90', 'border-stone-200/80', 'shadow-sm');
+                    cardBaseClass = "bg-white/95 text-stone-800 border border-stone-200/80 shadow-sm hover:shadow-md";
+                    break;
+                case 'dark-modern':
+                    body.classList.add('bg-slate-950', 'text-slate-100');
+                    headerCard.classList.add('bg-slate-900/90', 'border-slate-800', 'shadow-xl');
+                    cardBaseClass = "bg-slate-900/90 text-slate-100 border border-slate-800 hover:border-slate-700 hover:bg-slate-800/90";
+                    isDark = true;
+                    break;
+                case 'subtle-mesh':
+                default:
+                    body.classList.add('bg-gradient-to-b', 'from-indigo-50/70', 'via-slate-50', 'to-sky-50/60', 'text-slate-800');
+                    headerCard.classList.add('bg-white/85', 'backdrop-blur-md', 'border-white', 'shadow-[0_8px_30px_rgb(0,0,0,0.04)]', 'bg-grid-pattern');
+                    cardBaseClass = "bg-white/90 backdrop-blur-sm text-slate-800 border border-slate-200/70 shadow-[0_2px_10px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.06)] hover:border-indigo-200";
+                    break;
+            }
+
+            // Update konten Header
+            const badgeWrap = document.getElementById('pub-badge-wrap');
+            const badgeText = (appConfig.profile.badgeText || '').trim();
+            if (badgeText) {
+                badgeWrap.classList.remove('hidden');
+                document.getElementById('pub-badge-text').textContent = badgeText;
+            } else {
+                badgeWrap.classList.add('hidden');
+            }
+
+            const avatarUrl = (appConfig.profile.avatarUrl || '').trim();
+            const avatarImg = document.getElementById('pub-avatar-img');
+            const avatarMono = document.getElementById('pub-avatar-monogram');
+            if (avatarUrl) {
+                avatarImg.src = avatarUrl;
+                avatarImg.classList.remove('hidden');
+                avatarMono.classList.add('hidden');
+                avatarImg.onerror = () => {
+                    avatarImg.classList.add('hidden');
+                    avatarMono.classList.remove('hidden');
+                };
+            } else {
+                avatarImg.classList.add('hidden');
+                avatarMono.classList.remove('hidden');
+            }
+
+            document.getElementById('pub-title').textContent = appConfig.profile.title || "Portal Link";
+            document.getElementById('pub-subtitle').textContent = appConfig.profile.subtitle || "Kumpulan Link Penting dan Bermanfaat";
+            document.getElementById('pub-footer-text').textContent = appConfig.profile.footerText || "";
+            document.title = `${appConfig.profile.title} - ${appConfig.profile.subtitle}`;
+
+            // Tampilkan search box hanya jika link aktif >= 4
+            const activeCount = appConfig.links.filter(l => l.active).length;
+            const searchWrap = document.getElementById('pub-search-wrapper');
+            if (activeCount >= 4) {
+                searchWrap.classList.remove('hidden');
+            } else {
+                searchWrap.classList.add('hidden');
+            }
+
+            renderPublicLinkCards(cardBaseClass, btnStyle, isDark);
+        }
+
+        function renderPublicLinkCards(cardBaseClass, btnStyle, isDark) {
+            const container = document.getElementById('pub-links-container');
+            const emptyState = document.getElementById('pub-empty-state');
+            const query = (document.getElementById('pub-search-input')?.value || '').toLowerCase().trim();
+            
+            container.innerHTML = '';
+
+            const filteredLinks = appConfig.links.filter(l => {
+                if (!l.active) return false;
+                if (!query) return true;
+                return l.title.toLowerCase().includes(query) || (l.subtitle && l.subtitle.toLowerCase().includes(query));
+            });
+
+            if (filteredLinks.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            emptyState.classList.add('hidden');
+
+            filteredLinks.forEach(link => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+
+                let styleModifier = "rounded-2xl ";
+                if (btnStyle === 'soft-pill') {
+                    styleModifier = "rounded-full ";
+                } else if (btnStyle === 'clean-outline') {
+                    styleModifier = isDark 
+                        ? "rounded-2xl !bg-transparent border-2 border-slate-700 hover:border-indigo-400 " 
+                        : "rounded-2xl !bg-transparent border-2 border-slate-800 hover:bg-slate-900 hover:text-white ";
+                } else if (btnStyle === 'bold-offset') {
+                    styleModifier = isDark
+                        ? "rounded-2xl border-2 border-slate-500 shadow-[4px_4px_0px_#64748b] "
+                        : "rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0px_#0f172a] ";
+                }
+
+                a.className = `link-card w-full p-3.5 sm:p-4 flex items-center justify-between gap-3.5 group ${cardBaseClass} ${styleModifier}`;
+
+                const accent = link.color || '#4f46e5';
+                const iconBg = isDark ? hexToRgba(accent, 0.18) : hexToRgba(accent, 0.11);
+                const iconBorder = isDark ? hexToRgba(accent, 0.35) : hexToRgba(accent, 0.22);
+                const iconObj = MODERN_ICONS[link.icon] || MODERN_ICONS.globe;
+
+                const subtitleHtml = link.subtitle 
+                    ? `<span class="block text-xs opacity-60 truncate mt-0.5 font-normal">${escapeHtml(link.subtitle)}</span>` 
+                    : '';
+
+                a.innerHTML = `
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <!-- Model Ikon Duotone Squircle Modern -->
+                        <div class="w-11 h-11 shrink-0 flex items-center justify-center ${btnStyle === 'soft-pill' ? 'rounded-full' : 'rounded-xl'} transition-transform duration-300 group-hover:scale-105"
+                             style="background-color: ${iconBg}; color: ${accent}; border: 1px solid ${iconBorder};">
+                            <div class="w-5 h-5">
+                                ${iconObj.svg}
+                            </div>
+                        </div>
+                        <div class="min-w-0 text-left">
+                            <span class="block font-semibold text-sm sm:text-[15px] leading-snug truncate">${escapeHtml(link.title)}</span>
+                            ${subtitleHtml}
+                        </div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 17 17 7"/><path d="M7 7h10v10"/>
+                        </svg>
+                    </div>
+                `;
+                container.appendChild(a);
+            });
+        }
+
+        function filterPublicLinks() {
+            renderPublicView();
+        }
+
+        // =====================================================================
+        // NAVIGASI, LOGIN & LOGOUT ADMIN
+        // =====================================================================
+        function openAdminGate() {
+            if (sessionStorage.getItem('portal_admin_auth') === 'true') {
+                enterAdminMode();
+                return;
+            }
+            const modal = document.getElementById('login-modal');
+            const passInput = document.getElementById('admin-password-input');
+            const eyeIcon = document.getElementById('login-eye-icon');
+
+            passInput.value = '';
+            passInput.type = 'password';
+            if (eyeIcon) {
+                eyeIcon.setAttribute('data-lucide', 'eye');
+                lucide.createIcons();
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => passInput.focus(), 100);
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('admin-password-input');
+            const eyeIcon = document.getElementById('login-eye-icon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                eyeIcon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                passInput.type = 'password';
+                eyeIcon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const input = document.getElementById('admin-password-input').value;
+            if (input === appConfig.adminPassword) {
+                sessionStorage.setItem('portal_admin_auth', 'true');
+                closeLoginModal();
+                enterAdminMode();
+                showToast("Login berhasil. Selamat datang di Dashboard Admin.", "success");
+            } else {
+                showToast("Password tidak valid! Akses ditolak.", "error");
+            }
+        }
+
+        function enterAdminMode() {
+            document.getElementById('public-view').classList.add('hidden');
+            document.getElementById('public-footer').classList.add('hidden');
+            document.getElementById('admin-session-bar').classList.add('hidden');
+
+            const adminView = document.getElementById('admin-view');
+            adminView.classList.remove('hidden');
+            adminView.classList.add('flex');
+            
+            document.body.className = "min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased";
+
+            selectIconInPicker(document.getElementById('link-icon').value || 'globe');
+            renderAdminLinks();
+            populateAppearanceForm();
+            lucide.createIcons();
+        }
+
+        function exitAdminMode() {
+            document.getElementById('admin-view').classList.add('hidden');
+            document.getElementById('admin-view').classList.remove('flex');
+            document.getElementById('public-view').classList.remove('hidden');
+            document.getElementById('public-footer').classList.remove('hidden');
+            renderPublicView();
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('portal_admin_auth');
+            document.getElementById('admin-session-bar').classList.add('hidden');
+            exitAdminMode();
+            showToast("Anda telah logout dari sesi Admin.", "info");
+        }
+
+        function switchAdminTab(tabName) {
+            ['links', 'appearance', 'publish'].forEach(t => {
+                document.getElementById(`tab-content-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`tab-btn-${t}`);
+                btn.className = "tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100 border border-slate-200";
+            });
+
+            document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            activeBtn.className = "tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition whitespace-nowrap bg-indigo-600 text-white shadow-sm";
+            lucide.createIcons();
+        }
+
+        // =====================================================================
+        // PEMILIH IKON VISUAL & CRUD LINK DI ADMIN
+        // =====================================================================
+        function renderIconPicker() {
+            const grid = document.getElementById('icon-picker-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            Object.keys(MODERN_ICONS).forEach(key => {
+                const item = MODERN_ICONS[key];
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.dataset.iconKey = key;
+                btn.title = item.label;
+                btn.onclick = () => selectIconInPicker(key);
+                btn.className = "icon-pick-btn h-10 rounded-lg border border-slate-200 bg-white text-slate-600 hover:border-indigo-400 hover:text-indigo-600 flex items-center justify-center transition";
+                btn.innerHTML = `<div class="w-4 h-4">${item.svg}</div>`;
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectIconInPicker(key) {
+            const validKey = MODERN_ICONS[key] ? key : 'globe';
+            document.getElementById('link-icon').value = validKey;
+            document.querySelectorAll('.icon-pick-btn').forEach(btn => {
+                if (btn.dataset.iconKey === validKey) {
+                    btn.classList.add('ring-2', 'ring-indigo-600', 'bg-indigo-50', 'text-indigo-600', 'border-indigo-600');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-indigo-600', 'bg-indigo-50', 'text-indigo-600', 'border-indigo-600');
+                }
+            });
+        }
+
+        function selectPresetColor(hex) {
+            document.getElementById('link-color').value = hex;
+            document.getElementById('link-color-hex').textContent = hex;
+        }
+
+        function renderAdminLinks() {
+            const list = document.getElementById('admin-links-list');
+            document.getElementById('admin-link-count').textContent = appConfig.links.length;
+            list.innerHTML = '';
+
+            if (appConfig.links.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-8 text-slate-400 border-2 border-dashed border-slate-200 rounded-xl">
+                        <p class="text-sm">Belum ada tautan. Tambahkan tautan pertama di samping.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            appConfig.links.forEach((link, index) => {
+                const accent = link.color || '#4f46e5';
+                const iconObj = MODERN_ICONS[link.icon] || MODERN_ICONS.globe;
+
+                const item = document.createElement('div');
+                item.className = `p-3.5 rounded-xl border ${link.active ? 'bg-white border-slate-200' : 'bg-slate-100/70 border-slate-200 opacity-60'} flex items-center justify-between gap-3 transition`;
+
+                item.innerHTML = `
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="flex flex-col gap-0.5 shrink-0">
+                            <button onclick="moveLink(${index}, -1)" ${index === 0 ? 'disabled' : ''} 
+                                    class="p-1 rounded hover:bg-slate-100 text-slate-500 disabled:opacity-25" title="Naik">
+                                <i data-lucide="chevron-up" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="moveLink(${index}, 1)" ${index === appConfig.links.length - 1 ? 'disabled' : ''} 
+                                    class="p-1 rounded hover:bg-slate-100 text-slate-500 disabled:opacity-25" title="Turun">
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                             style="background-color: ${hexToRgba(accent, 0.12)}; color: ${accent}; border: 1px solid ${hexToRgba(accent, 0.25)};">
+                            <div class="w-5 h-5">${iconObj.svg}</div>
+                        </div>
+
+                        <div class="min-w-0">
+                            <div class="font-semibold text-sm text-slate-800 truncate">${escapeHtml(link.title)}</div>
+                            <div class="text-xs text-slate-400 truncate">${escapeHtml(link.url)}</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="toggleLinkActive('${link.id}')" 
+                                class="p-2 rounded-lg border ${link.active ? 'border-emerald-200 bg-emerald-50 text-emerald-600' : 'border-slate-200 bg-white text-slate-400'} hover:opacity-80 transition"
+                                title="${link.active ? 'Sembunyikan' : 'Tampilkan'}">
+                            <i data-lucide="${link.active ? 'eye' : 'eye-off'}" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="editLink('${link.id}')" 
+                                class="p-2 rounded-lg border border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 text-slate-600 transition" title="Edit">
+                            <i data-lucide="pencil" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="deleteLink('${link.id}')" 
+                                class="p-2 rounded-lg border border-slate-200 hover:bg-red-50 hover:text-red-600 text-slate-600 transition" title="Hapus">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+
+            lucide.createIcons();
+        }
+
+        function saveLink(e) {
+            e.preventDefault();
+            const id = document.getElementById('link-id').value;
+            const title = document.getElementById('link-title').value.trim();
+            const subtitle = document.getElementById('link-subtitle').value.trim();
+            const url = document.getElementById('link-url').value.trim();
+            const icon = document.getElementById('link-icon').value || 'globe';
+            const color = document.getElementById('link-color').value || '#4f46e5';
+
+            if (id) {
+                const idx = appConfig.links.findIndex(l => l.id === id);
+                if (idx !== -1) {
+                    appConfig.links[idx] = { ...appConfig.links[idx], title, subtitle, url, icon, color };
+                    showToast("Tautan berhasil diperbarui!", "success");
+                }
+            } else {
+                appConfig.links.push({
+                    id: 'link-' + Date.now(),
+                    title,
+                    subtitle,
+                    url,
+                    icon,
+                    color,
+                    active: true
+                });
+                showToast("Tautan baru ditambahkan!", "success");
+            }
+
+            saveConfig();
+            resetLinkForm();
+            renderAdminLinks();
+        }
+
+        function editLink(id) {
+            const link = appConfig.links.find(l => l.id === id);
+            if (!link) return;
+
+            document.getElementById('link-id').value = link.id;
+            document.getElementById('link-title').value = link.title;
+            document.getElementById('link-subtitle').value = link.subtitle || '';
+            document.getElementById('link-url').value = link.url;
+            selectIconInPicker(link.icon || 'globe');
+            selectPresetColor(link.color || '#4f46e5');
+
+            document.getElementById('form-link-title').innerHTML = `<i data-lucide="pencil" class="w-5 h-5 text-amber-500"></i><span>Edit Tautan</span>`;
+            document.getElementById('save-link-btn-text').textContent = "Update Link";
+            document.getElementById('cancel-edit-btn').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function resetLinkForm() {
+            document.getElementById('link-form').reset();
+            document.getElementById('link-id').value = '';
+            selectIconInPicker('globe');
+            selectPresetColor('#4f46e5');
+            document.getElementById('form-link-title').innerHTML = `<i data-lucide="plus-circle" class="w-5 h-5 text-indigo-600"></i><span>Tambah Link Baru</span>`;
+            document.getElementById('save-link-btn-text').textContent = "Simpan Link";
+            document.getElementById('cancel-edit-btn').classList.add('hidden');
+            lucide.createIcons();
+        }
+
+        function deleteLink(id) {
+            appConfig.links = appConfig.links.filter(l => l.id !== id);
+            saveConfig();
+            renderAdminLinks();
+            showToast("Tautan dihapus.", "info");
+        }
+
+        function toggleLinkActive(id) {
+            const link = appConfig.links.find(l => l.id === id);
+            if (link) {
+                link.active = !link.active;
+                saveConfig();
+                renderAdminLinks();
+            }
+        }
+
+        function moveLink(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= appConfig.links.length) return;
+            const temp = appConfig.links[index];
+            appConfig.links[index] = appConfig.links[newIndex];
+            appConfig.links[newIndex] = temp;
+            saveConfig();
+            renderAdminLinks();
+        }
+
+        // =====================================================================
+        // PENGATURAN HEADER & TAMPILAN
+        // =====================================================================
+        function populateAppearanceForm() {
+            document.getElementById('set-title').value = appConfig.profile.title;
+            document.getElementById('set-badge').value = appConfig.profile.badgeText || '';
+            document.getElementById('set-subtitle').value = appConfig.profile.subtitle;
+            document.getElementById('set-avatar').value = appConfig.profile.avatarUrl || '';
+            document.getElementById('set-footer').value = appConfig.profile.footerText;
+            highlightSelectedAppearance();
+        }
+
+        function updateProfileSettings() {
+            appConfig.profile.title = document.getElementById('set-title').value;
+            appConfig.profile.badgeText = document.getElementById('set-badge').value;
+            appConfig.profile.subtitle = document.getElementById('set-subtitle').value;
+            appConfig.profile.avatarUrl = document.getElementById('set-avatar').value.trim();
+            appConfig.profile.footerText = document.getElementById('set-footer').value;
+            saveConfig();
+        }
+
+        function setTheme(themeName) {
+            appConfig.appearance.theme = themeName;
+            saveConfig();
+            highlightSelectedAppearance();
+            showToast("Tema latar diperbarui!", "success");
+        }
+
+        function setButtonStyle(styleName) {
+            appConfig.appearance.buttonStyle = styleName;
+            saveConfig();
+            highlightSelectedAppearance();
+            showToast("Gaya kartu diperbarui!", "success");
+        }
+
+        function highlightSelectedAppearance() {
+            document.querySelectorAll('.theme-option').forEach(btn => {
+                if (btn.dataset.theme === appConfig.appearance.theme) {
+                    btn.classList.add('ring-2', 'ring-indigo-600', 'bg-indigo-50/50', 'border-indigo-600');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-indigo-600', 'bg-indigo-50/50', 'border-indigo-600');
+                }
+            });
+
+            document.querySelectorAll('.btn-style-option').forEach(btn => {
+                if (btn.dataset.style === appConfig.appearance.buttonStyle) {
+                    btn.classList.add('ring-2', 'ring-indigo-600', 'bg-indigo-50', 'text-indigo-700');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-indigo-600', 'bg-indigo-50', 'text-indigo-700');
+                }
+            });
+        }
+
+        function updateAdminPassword() {
+            const newPass = document.getElementById('set-new-password').value.trim();
+            if (newPass.length < 4) {
+                showToast("Password minimal 4 karakter.", "error");
+                return;
+            }
+            appConfig.adminPassword = newPass;
+            saveConfig();
+            document.getElementById('set-new-password').value = '';
+            showToast("Password admin berhasil diperbarui!", "success");
+        }
+
+        // =====================================================================
+        // PUBLIKASI GITHUB PAGES (EXPORT HTML / JSON / RESET)
+        // =====================================================================
+        function generateDeployableHtml() {
+            const cloneDoc = document.documentElement.cloneNode(true);
+            
+            cloneDoc.querySelector('#public-view').classList.remove('hidden');
+            cloneDoc.querySelector('#public-footer').classList.remove('hidden');
+            cloneDoc.querySelector('#admin-session-bar').classList.add('hidden');
+            const adminEl = cloneDoc.querySelector('#admin-view');
+            adminEl.classList.add('hidden');
+            adminEl.classList.remove('flex');
+            const loginModal = cloneDoc.querySelector('#login-modal');
+            loginModal.classList.add('hidden');
+            loginModal.classList.remove('flex');
+            cloneDoc.querySelector('#toast-container').innerHTML = '';
+
+            const configScript = cloneDoc.querySelector('#site-config-script');
+            configScript.textContent = `\n        const DEFAULT_CONFIG = ${JSON.stringify(appConfig, null, 12)};\n    `;
+
+            return "<!DOCTYPE html>\n" + cloneDoc.outerHTML;
+        }
+
+        function copyFullHtmlForDeploy() {
+            const fullHtml = generateDeployableHtml();
+            const textarea = document.createElement('textarea');
+            textarea.value = fullHtml;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast("Kode HTML siap deploy disalin! Paste ke file index.html di GitHub.", "success");
+            } catch (err) {
+                showToast("Gagal menyalin otomatis. Gunakan tombol Download index.html.", "error");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function downloadHtmlFile() {
+            const fullHtml = generateDeployableHtml();
+            const blob = new Blob([fullHtml], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("File index.html berhasil diunduh!", "success");
+        }
+
+        function exportJsonConfig() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appConfig, null, 2));
+            const a = document.createElement('a');
+            a.href = dataStr;
+            a.download = "backup-portal-link.json";
+            a.click();
+            showToast("Backup JSON diunduh.", "success");
+        }
+
+        function importJsonConfig(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported && imported.profile && Array.isArray(imported.links)) {
+                        appConfig = imported;
+                        saveConfig();
+                        renderAdminLinks();
+                        populateAppearanceForm();
+                        showToast("Backup JSON berhasil dipulihkan!", "success");
+                    } else {
+                        showToast("Format file JSON tidak valid.", "error");
+                    }
+                } catch (err) {
+                    showToast("Gagal membaca file JSON.", "error");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function confirmResetDefault() {
+            const modal = document.getElementById('reset-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeResetModal() {
+            const modal = document.getElementById('reset-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function executeResetDefault() {
+            localStorage.removeItem(STORAGE_KEY);
+            appConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+            saveConfig();
+            renderAdminLinks();
+            populateAppearanceForm();
+            closeResetModal();
+            showToast("Pengaturan dikembalikan ke default.", "info");
+        }
+
+        // =====================================================================
+        // UTILITAS
+        // =====================================================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let colors = "bg-slate-800 text-white";
+            if (type === 'success') colors = "bg-emerald-600 text-white";
+            if (type === 'error') colors = "bg-red-600 text-white";
+
+            toast.className = `${colors} px-4 py-3 rounded-xl shadow-lg text-xs sm:text-sm font-medium flex items-center gap-2 transform transition-all duration-300 pointer-events-auto`;
+            toast.textContent = message;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3200);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
